@@ -22,9 +22,9 @@ import { Link, withRouter } from 'react-router-dom';
 
 class AboutView extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
 
 
@@ -32,39 +32,38 @@ class AboutView extends Component {
 
 
 
-    render() {
-        let userLayout;
-        userLayout = (
-          <Segment
+  render() {
+    let userLayout;
+    userLayout = (
+      <Segment
+        inverted
+        textAlign='center'
+        style={{ minHeight: 100, padding: '1em 0em' }}
+        vertical
+      >
+        <Container text>
+          <Header
+            as='h1'
             inverted
-            textAlign='center'
-            style={{ minHeight: 100, padding: '1em 0em' }}
-            vertical
+            style={{
+              fontWeight: 'normal',
+              marginBottom: '1em',
+              marginTop: '1em',
+            }}
           >
-          <Container text>
-            <Header
-              as='h1'
-              content='About GLoaT'
-              inverted
-              style={{
-                fontSize: '4em',
-                fontWeight: 'normal',
-                marginBottom: 0,
-                marginTop: '3em',
-              }}
-            />
-          </Container>
-          Work in progress
-          </Segment>
-        );
+            About cheapGLoaT
+          </Header>
+        </Container>
+      </Segment>
+    );
 
 
-        return (
-            <div>
-                {userLayout}
-            </div>
-        );
-    }
+    return (
+      <div>
+        {userLayout}
+      </div>
+    );
+  }
 
 }
 
