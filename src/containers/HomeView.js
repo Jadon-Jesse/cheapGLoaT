@@ -23,109 +23,142 @@ import { Link, withRouter } from 'react-router-dom';
 
 class HomeView extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    state = {
-        curMsg:"",
-        value:"",
-        message:"",
-    };
-    
+  state = {
+    curMsg: "",
+    value: "",
+    message: "",
+    accountsAvailable: false
+  };
 
 
-    componentDidMount() {
-      this.initSourceFeedViewData();
 
-    }
+  componentDidMount() {
+    this.initPageData();
 
-    initSourceFeedViewData = async () => {
+  }
 
-      let accounts;
-      if (web3 !== null && linkoff !== null) {
-        console.log(web3.version);
-        console.log("Got3");
-        accounts = await web3.eth.getAccounts();
-        console.log(accounts);
+  initPageData = async () => {
 
-        const message = await linkoff.methods.chairperson().call();
-        this.setState({
-          curMsg:message
-        });
+    let accounts;
+    let accAvailable = false;
+    if (web3 !== null && linkoff !== null) {
+      // console.log(web3.version);
+      // console.log("Got3");
+      accounts = await web3.eth.getAccounts();
+      // console.log(accounts);
+      if (accounts.length > 0) {
+        accAvailable = true;
       }
-      else{
-        console.log("No 3");
+      else {
+        accAvailable = false;
+
       }
 
+      const message = await linkoff.methods.chairperson().call();
+      this.setState({
+        curMsg: message
+      });
+    }
+    else {
+      accAvailable = false;
+
+    }
+    this.setState({ accountsAvailable: accAvailable });
 
 
-    };
+
+
+  };
 
 
 
 
 
-    render() {
-        let userLayout;
-        userLayout = (
-          <Segment
-            inverted
-            textAlign='center'
-            style={{ minHeight: 700, padding: '1em 0em' }}
-            vertical
-          >
-          <Container text>
-              <div className="logoText">
-                <p>cheap</p>GLOAT
+  render() {
+    let userLayout;
+    let submitButton = null;
 
-              </div>
-            <Header
-              as='h1'
-              content='Submit your greatest link'
-              inverted
-              style={{
-                fontSize: '4em',
-                fontWeight: 'normal',
-                marginBottom: '1em',
-                marginTop: '1em',
-              }}
-            />
-            <Link to={{ pathname: "/cheapGLoaT/submit" }}>
-            <Button primary size='huge'>
+    if (this.state.accountsAvailable === true) {
+      submitButton = (
+        <Link to={{ pathname: "/cheapGLoaT/submit" }}>
+          <Button primary size='huge'>
+            Submit
+            <Icon name='right arrow' />
+          </Button>
+        </Link>
+      );
+    }
+    else {
+      submitButton = (
+        <div>
+          <Link>
+            <Button primary size='huge' disabled>
               Submit
               <Icon name='right arrow' />
             </Button>
-            </Link>
-            <Header
-              as='h2'
-              inverted
-              style={{
-                fontSize: '1.7em',
-                fontWeight: 'normal',
-                marginTop:'1.5em',
-              }}
-            >
-              <p>Or browse <Link to={{ pathname: "/cheapGLoaT/new" }}>new submissions</Link></p>  
-
-            </Header>
-
-
-            {this.state.curMsg}
-
-            
-          </Container>
-          </Segment>
-        );
-
-
-        return (
-            <div>
-
-                {userLayout}
-            </div>
-        );
+          </Link>
+          <p>(Unable to connect to web3 directly - try installing metamask to participate)</p>
+        </div>
+      );
     }
+
+    userLayout = (
+      <Segment
+        inverted
+        textAlign='center'
+        style={{ padding: '1em 0em' }}
+        vertical
+      >
+        <Container text>
+          <div className="logoText">
+            <p>cheap</p>GLOAT
+
+              </div>
+          <Header
+            as='h1'
+            content='Submit your greatest link'
+            inverted
+            style={{
+              fontSize: '4em',
+              fontWeight: 'normal',
+              marginBottom: '1em',
+              marginTop: '1em',
+            }}
+          />
+          {submitButton}
+          <Header
+            as='h2'
+            inverted
+            style={{
+              fontSize: '1.7em',
+              fontWeight: 'normal',
+              marginTop: '1.5em',
+            }}
+          >
+            <p>Or browse <Link to={{ pathname: "/cheapGLoaT/new" }}>new submissions</Link></p>
+
+          </Header>
+
+
+          {this.state.curMsg}
+
+
+        </Container>
+      </Segment>
+    );
+
+
+    return (
+      <div>
+
+        {userLayout}
+      </div>
+    );
+  }
 
 }
 
