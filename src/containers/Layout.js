@@ -120,26 +120,26 @@ class CustomLayout extends React.Component {
                 <Container>
                   <Menu.Item active={this.state.gloatActive} name="GloaT">
                     <Button inverted={!fixed}  >
-                      <Link to={{ pathname: "/gloat" }} onClick={this.handleMenuItemClick}>
+                      <Link to={{ pathname: "/cheapGLoaT/gloat" }} onClick={this.handleMenuItemClick}>
                       GLoaT
                       </Link>
                     </Button>
                   </Menu.Item>
                   
                   <Menu.Item active={this.state.homeActive} name="Home"  link >
-                    <Link to={{ pathname: "/" }} onClick={this.handleMenuItemClick}>
+                    <Link to={{ pathname: "/cheapGLoaT/" }} onClick={this.handleMenuItemClick}>
                       Home
                     </Link>
                   </Menu.Item>
 
                   <Menu.Item active={this.state.newActive} name="New"  link>
-                    <Link to={{ pathname: "/new" }} onClick={this.handleMenuItemClick}>
+                    <Link to={{ pathname: "/cheapGLoaT/new" }} onClick={this.handleMenuItemClick}>
                       New
                     </Link>
                   </Menu.Item>
                   
                   <Menu.Item  active={this.state.aboutActive} name="About"  link>
-                    <Link to={{ pathname: "/about" }} onClick={this.handleMenuItemClick}>
+                    <Link to={{ pathname: "/cheapGLoaT/about" }} onClick={this.handleMenuItemClick}>
                       About
                     </Link>
                   </Menu.Item>

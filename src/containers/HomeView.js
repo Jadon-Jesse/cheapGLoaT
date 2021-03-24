@@ -91,7 +91,7 @@ class HomeView extends Component {
                 marginTop: '1em',
               }}
             />
-            <Link to={{ pathname: "/submit" }}>
+            <Link to={{ pathname: "/cheapGLoaT/submit" }}>
             <Button primary size='huge'>
               Submit
               <Icon name='right arrow' />
@@ -106,7 +106,7 @@ class HomeView extends Component {
                 marginTop:'1.5em',
               }}
             >
-              <p>Or browse <Link to={{ pathname: "/new" }}>new submissions</Link></p>  
+              <p>Or browse <Link to={{ pathname: "/cheapGLoaT/new" }}>new submissions</Link></p>  
 
             </Header>
 
