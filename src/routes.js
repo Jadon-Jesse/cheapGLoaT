@@ -10,11 +10,11 @@ import NewView from './containers/NewView';
 
 const BaseRouter = () => (
     <div>
-        <Route path="/" component={HomeView} />
-        <Route path="/gloat" component={GloatView} />
-        <Route path="/about" component={AboutView} />
-        <Route path="/submit" component={SubmitView} />
-        <Route path="/new" component={NewView} />
+        <Route exact path="/cheapGLoaT/" component={HomeView} />
+        <Route exact path="/cheapGLoaT/gloat" component={GloatView} />
+        <Route exact path="/cheapGLoaT/about" component={AboutView} />
+        <Route exact path="/cheapGLoaT/submit" component={SubmitView} />
+        <Route exact path="/cheapGLoaT/new" component={NewView} />
         
     </div>
 );
