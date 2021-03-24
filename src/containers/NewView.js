@@ -79,8 +79,8 @@ class NewView extends Component {
 
     let listItems = this.state.newSubs.map(row => {
       const truncate = (str, start, end) => {
-        // only if str len is > 64
-        if (str.length > 64) {
+        // only if str len is > 42
+        if (str.length > start) {
 
           let seperator = '...';
           return str.substr(0, start) + seperator + str.substr(str.length - end);
@@ -90,7 +90,7 @@ class NewView extends Component {
         }
       }
 
-      const subUrlTruncated = truncate(row.subUrl, 64, 3);
+      const subUrlTruncated = truncate(row.subUrl, 42, 3);
       // console.log(row);
       return (
         <Item>
@@ -102,15 +102,8 @@ class NewView extends Component {
           <Item.Content >
 
             <Item.Header href={row.subUrl}>
-              <div class="container" style={{ maxWidth: "800px" }}>
-                <span title={row.subUrl} style={{
-                  width: "100%",
-                  display: "inline-block",
-                  direction: "ltr",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden"
-                }}>
+              <div class="container" >
+                <span title={row.subUrl}>
                   {subUrlTruncated}
                 </span>
               </div>
@@ -123,7 +116,7 @@ class NewView extends Component {
             </Item.Extra>
           </Item.Content>
 
-          <Item.Content style={{ minWidth: "400px", paddingLeft: "10px" }}>
+          <Item.Content style={{ paddingLeft: "10px" }}>
             <div style={{ float: "right" }}>
               <Button
                 content='Like'
