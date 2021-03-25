@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import '../App.css';
-import { createMedia } from '@artsy/fresnel';
-import PropTypes from 'prop-types';
+// import { createMedia } from '@artsy/fresnel';
+// import PropTypes from 'prop-types';
 // import web3 from './web3';
 import {
   Button,
   Container,
-  Divider,
-  Grid,
   Header,
-  Icon,
-  Image,
-  List,
-  Menu,
   Segment,
-  Sidebar,
-  Visibility,
+  Item,
+  Label,
   Card
 } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
+import linkoff from '../linkoff';
+import web3 from '../web3';
+
+const ZERO_ADDR = "0x0000000000000000000000000000000000000000";
+
 
 class GloatView extends Component {
 
@@ -27,12 +26,234 @@ class GloatView extends Component {
     super(props);
   }
 
+  state = {
+    curMsg: "",
+    value: "",
+    message: "",
+    gloatCount: 0,
+    gloatList: [],
+    loading: false,
+    roundNum: null,
+    accountsAvailable: false,
+    accountList: []
+  };
+
+
+  componentDidMount() {
+    this.initPageData();
+
+  }
+
+  initPageData = async () => {
+
+    let accounts;
+    let accAvailable = false;
+    if (web3 !== null && linkoff !== null) {
+      // console.log(web3.version);
+      // console.log("Got3");
+      accounts = await web3.eth.getAccounts();
+      // console.log(accounts);
+      if (accounts.length > 0) {
+        accAvailable = true;
+      }
+      else {
+        accAvailable = false;
+      }
+    }
+    else {
+      accAvailable = false;
+    }
+
+    if (accAvailable == true) {
+      // user has web3 available
+      // fetch list of current submissions
+      // const rnum = await linkoff.methods.currentRoundNum().call();
+      // console.log(rnum);
+
+      this.setState({
+        loading: true,
+        accountsAvailable: accAvailable,
+        accountList: accounts,
+      });
+
+      // first get the number of gloats
+      // const numGloats = await linkoff.methods.gloatIndex().call();
+
+      // use roundNum for now
+      const numGloats = await linkoff.methods.currentRoundNum().call();
+      // TODO: add paganation logic
+
+      var glts = [];
+      if (numGloats > 0) {
+        for (var i = 0; i < numGloats; i++) {
+          const gloatI = await linkoff.methods.theGloats(i).call();
+          glts.push(gloatI);
+
+        }
+      }
+
+      // var subs = [];
+
+      // for (var i = 0; i < 20; i++) {
+      //   const subI = await linkoff.methods.submissions(i).call();
+      //   subs.push(subI);
+
+      // }
+
+
+      // console.log(message);
+      this.setState({
+        gloatList: glts,
+        loading: false
+      });
+
+
+    }
+    else {
+      // user does not have web3
+      // let them know
+      this.setState({
+        loading: false,
+        accountsAvailable: accAvailable,
+      });
+    }
+
+  };
+
 
 
 
 
   render() {
     let userLayout;
+
+
+    let listItems = this.state.gloatList.map((row, index) => {
+      const truncate = (str, start, end) => {
+        // only if str len is > 42
+        if (str.length > start) {
+
+          let seperator = '...';
+          return str.substr(0, start) + seperator + str.substr(str.length - end);
+        }
+        else {
+          return str;
+        }
+      }
+
+      const position = (index + 1);
+
+
+      if (row.subAddr == ZERO_ADDR) {
+        // use subAddr to tell if this post has been actually submitted
+
+        const upVoteLabelObj = { basic: true, content: row.upvoteCount };
+        const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount };
+        return (
+          <Item key={position}>
+
+            <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
+              <Item.Header>{position}.</Item.Header>
+            </Item.Content>
+
+            <Item.Content >
+
+              <Item.Header >
+                <div className="container" >
+                  <span title="">
+                  </span>
+                </div>
+
+              </Item.Header>
+              <Item.Description> <Label size="mini">by {row.subAddr}</Label></Item.Description>
+              <Item.Extra>
+
+
+              </Item.Extra>
+            </Item.Content>
+
+            <Item.Content style={{ paddingLeft: "10px" }}>
+              <div style={{ float: "right" }}>
+                <Button
+                  disabled
+                  icon='arrow up'
+                  color="blue"
+                  label={upVoteLabelObj}
+                  labelPosition='right'
+                />
+                <Button
+                  disabled
+                  icon='arrow down'
+                  color="black"
+                  label={downVoteLabelObj}
+                  labelPosition='left'
+                />
+              </div>
+            </Item.Content>
+
+          </Item>
+        );
+
+      }
+      else {
+
+        const subUrlTruncated = truncate(row.subUrl, 42, 3);
+        // console.log(row);
+
+
+        // create the upvote/downvote label objects for this row
+        const upVoteLabelObj = { basic: true, content: row.upvoteCount, color: "blue" };
+        const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount, color: "black" };
+        return (
+          <Item key={index}>
+
+            <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
+              <Item.Header>{row.roundNumber}.</Item.Header>
+            </Item.Content>
+
+            <Item.Content >
+
+              <Item.Header href={row.subUrl} target='_blank'>
+                <div className="container" >
+                  <span title={row.subUrl}>
+                    {subUrlTruncated}
+                  </span>
+                </div>
+
+              </Item.Header>
+              <Item.Description>{row.subCaption} <Label color="blue" size="mini">by {row.subAddr}</Label></Item.Description>
+              <Item.Extra>
+
+
+              </Item.Extra>
+            </Item.Content>
+
+            <Item.Content style={{ paddingLeft: "10px" }}>
+              <div style={{ float: "right" }}>
+                <Button
+                  icon='arrow up'
+                  color="blue"
+                  label={upVoteLabelObj}
+                  labelPosition='right'
+                  value={row.subId}
+                />
+                <Button
+                  icon='arrow down'
+                  color="black"
+                  label={downVoteLabelObj}
+                  labelPosition='left'
+                  value={row.subId}
+                />
+              </div>
+            </Item.Content>
+
+          </Item>
+        );
+      }
+
+    });
+
+
     userLayout = (
       <div  >
         <Segment
@@ -40,12 +261,11 @@ class GloatView extends Component {
           textAlign='center'
           style={{ minHeight: 100, padding: '1em 0em' }}
           vertical
+          loading={this.state.loading}
         >
           <Container text >
             <Header
-
               as='h1'
-
               inverted
               style={{
                 fontWeight: 'normal',
@@ -60,32 +280,13 @@ class GloatView extends Component {
         </Segment>
 
         <Segment
-          textAlign='center'
           style={{ margin: '3em', padding: '1em 0em' }}
-          vertical>
-          <List divided relaxed>
-            <List.Item>
-              <List.Icon name='github' size='large' verticalAlign='middle' />
-              <List.Content>
-                <List.Header as='a'>Semantic-Org/Semantic-UI</List.Header>
-                <List.Description as='a'>Updated 10 mins ago</List.Description>
-              </List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Icon name='github' size='large' verticalAlign='middle' />
-              <List.Content>
-                <List.Header as='a'>Semantic-Org/Semantic-UI-Docs</List.Header>
-                <List.Description as='a'>Updated 22 mins ago</List.Description>
-              </List.Content>
-            </List.Item>
-            <List.Item>
-              <List.Icon name='github' size='large' verticalAlign='middle' />
-              <List.Content>
-                <List.Header as='a'>Semantic-Org/Semantic-UI-Meteor</List.Header>
-                <List.Description as='a'>Updated 34 mins ago</List.Description>
-              </List.Content>
-            </List.Item>
-          </List>
+          vertical
+          size="small"
+        >
+          <Item.Group divided>
+            {listItems}
+          </Item.Group>
         </Segment>
       </div>
     );

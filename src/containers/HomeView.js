@@ -24,7 +24,11 @@ class HomeView extends Component {
     curMsg: "",
     value: "",
     message: "",
-    accountsAvailable: false
+    accountsAvailable: false,
+    accountList: [],
+    cRoundStartTime: null,
+    userCanCallNext: false,
+    loading: false,
   };
 
 
@@ -36,8 +40,11 @@ class HomeView extends Component {
 
   initPageData = async () => {
 
-    let accounts;
+    let accounts = [];
     let accAvailable = false;
+    let usrNxt = false;
+
+
     if (web3 !== null && linkoff !== null) {
       // console.log(web3.version);
       // console.log("Got3");
@@ -52,17 +59,53 @@ class HomeView extends Component {
       }
 
       const message = await linkoff.methods.chairperson().call();
-      this.setState({
-        curMsg: message
-      });
+      const roundStart = await linkoff.methods.roundStartTime().call();
+      var roundStartDt = new Date(roundStart * 1000);
+      console.log("Round Start:", roundStart, "as dt", roundStartDt);
+
+      const userNow = new Date(Date.now());
+      console.log("User Now", userNow);
+      // get diff between round start and users now in milisecs
+      const dtMili = Math.abs(userNow - roundStartDt);
+      console.log(dtMili);
+
+      // const milsRoundInt = 21600000;
+      const milsRoundInt = 21600;
+
+      if (dtMili > milsRoundInt) {
+        // enable pick winner for the current user
+        usrNxt = true;
+
+      }
+
     }
     else {
       accAvailable = false;
 
     }
-    this.setState({ accountsAvailable: accAvailable });
+    this.setState({ accountsAvailable: accAvailable, userCanCallNext: usrNxt, accountList: accounts });
 
   };
+
+  handleClickCallNextRound = () => {
+    console.log("User called next");
+    // now try call next round async
+    this.callNextRoundPickWinner();
+
+  }
+
+  callNextRoundPickWinner = async () => {
+    this.setState({ loading: true });
+    try {
+      const result = await linkoff.methods.checkIfNextRoundAndPickWinner().send({
+        from: this.state.accountList[0],
+        gas: "5000000",
+      });
+    } catch (error) {
+      console.log("Error, unable to pick winner. Err:", error);
+    }
+    this.setState({ loading: false });
+  }
 
 
 
@@ -71,11 +114,12 @@ class HomeView extends Component {
   render() {
     let userLayout;
     let submitButton = null;
+    let callNextButton = null;
 
     if (this.state.accountsAvailable === true) {
       submitButton = (
         <Link to={{ pathname: "/cheapGLoaT/submit" }}>
-          <Button primary size='huge' onClick={this.props.setRouteNewHandler}>
+          <Button primary size='huge' icon labelPosition='right'>
             Submit
             <Icon name='right arrow' />
           </Button>
@@ -85,12 +129,21 @@ class HomeView extends Component {
     else {
       submitButton = (
         <div>
-          <Button primary size='huge' disabled>
+          <Button primary size='huge' disabled icon labelPosition='right'>
             Submit
               <Icon name='right arrow' />
           </Button>
           <p>(Unable to connect to web3 directly - try installing metamask to participate)</p>
         </div>
+      );
+    }
+
+    if (this.state.userCanCallNext === true) {
+      callNextButton = (
+        <Button loading={this.state.loading} basic color='orange' size='huge' onClick={this.handleClickCallNextRound} icon labelPosition='right'>
+          Next Round
+          <Icon name='recycle' />
+        </Button>
       );
     }
 
@@ -117,7 +170,15 @@ class HomeView extends Component {
               marginTop: '1em',
             }}
           />
-          {submitButton}
+          <div>
+            <div style={{ marginBottom: '1em' }}>
+              {submitButton}
+            </div>
+
+            <div style={{ marginBottom: '1em' }}>
+              {callNextButton}
+            </div>
+          </div>
           <Header
             as='h2'
             inverted

@@ -144,7 +144,7 @@ class NewView extends Component {
     console.log("Downvote clicked");
     // console.log(data);
     const buttonClickId = event.value;
-    this.submitUpvoteAsync(buttonClickId);
+    this.submitDownvotevoteAsync(buttonClickId);
 
   }
 
