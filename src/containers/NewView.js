@@ -15,6 +15,8 @@ import web3 from '../web3';
 import { Link, withRouter } from 'react-router-dom';
 import linkoff from '../linkoff';
 
+const ZERO_ADDR = "0x0000000000000000000000000000000000000000";
+
 class NewView extends Component {
 
   constructor(props) {
@@ -140,7 +142,7 @@ class NewView extends Component {
   render() {
     let userLayout;
 
-    let listItems = this.state.newSubs.map(row => {
+    let listItems = this.state.newSubs.map((row, index) => {
       const truncate = (str, start, end) => {
         // only if str len is > 42
         if (str.length > start) {
@@ -153,59 +155,122 @@ class NewView extends Component {
         }
       }
 
-      const subUrlTruncated = truncate(row.subUrl, 42, 3);
-      // console.log(row);
+      // check if this sub has data
+      // if not, return empty component with unclickable buttons
+      console.log(row.subAddr);
+      console.log(typeof row.subAddr);
 
-      // create the upvote/downvote label objects for this row
-      const upVoteLabelObj = { basic: true, content: row.upvoteCount, color: "blue" };
-      const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount, color: "red" };
-      return (
-        <Item>
+      const position = (index + 1)
 
-          <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
-            <Item.Header>{row.subId}.</Item.Header>
-          </Item.Content>
 
-          <Item.Content >
+      if (row.subAddr == ZERO_ADDR) {
+        // use subAddr to tell if this post has been actually submitted
 
-            <Item.Header href={row.subUrl}>
-              <div class="container" >
-                <span title={row.subUrl}>
-                  {subUrlTruncated}
-                </span>
+        const upVoteLabelObj = { basic: true, content: row.upvoteCount };
+        const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount };
+        return (
+          <Item key={position}>
+
+            <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
+              <Item.Header>{position}.</Item.Header>
+            </Item.Content>
+
+            <Item.Content >
+
+              <Item.Header >
+                <div class="container" >
+                  <span title="">
+                  </span>
+                </div>
+
+              </Item.Header>
+              <Item.Description> <Label size="mini">by {row.subAddr}</Label></Item.Description>
+              <Item.Extra>
+
+
+              </Item.Extra>
+            </Item.Content>
+
+            <Item.Content style={{ paddingLeft: "10px" }}>
+              <div style={{ float: "right" }}>
+                <Button
+                  disabled
+                  icon='arrow up'
+                  color="blue"
+                  label={upVoteLabelObj}
+                  labelPosition='right'
+                />
+                <Button
+                  disabled
+                  icon='arrow down'
+                  color="black"
+                  label={downVoteLabelObj}
+                  labelPosition='left'
+                />
               </div>
+            </Item.Content>
 
-            </Item.Header>
-            <Item.Description>{row.subCaption} <Label size="mini">by {row.subAddr}</Label></Item.Description>
-            <Item.Extra>
+          </Item>
+        );
+
+      }
+      else {
+
+        const subUrlTruncated = truncate(row.subUrl, 42, 3);
+        // console.log(row);
 
 
-            </Item.Extra>
-          </Item.Content>
+        // create the upvote/downvote label objects for this row
+        const upVoteLabelObj = { basic: true, content: row.upvoteCount, color: "blue" };
+        const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount, color: "black" };
+        return (
+          <Item key={index}>
 
-          <Item.Content style={{ paddingLeft: "10px" }}>
-            <div style={{ float: "right" }}>
-              <Button
-                onClick={this.handleClickUpvote}
-                icon='arrow up'
-                color="blue"
-                label={upVoteLabelObj}
-                labelPosition='right'
-                value={row.subId}
-              />
-              <Button
-                onClick={this.handleClickDownvote}
-                icon='arrow down'
-                color="red"
-                label={downVoteLabelObj}
-                labelPosition='left'
-                value={row.subId}
-              />
-            </div>
-          </Item.Content>
+            <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
+              <Item.Header>{row.subId}.</Item.Header>
+            </Item.Content>
 
-        </Item>
-      );
+            <Item.Content >
+
+              <Item.Header href={row.subUrl} target='_blank'>
+                <div class="container" >
+                  <span title={row.subUrl}>
+                    {subUrlTruncated}
+                  </span>
+                </div>
+
+              </Item.Header>
+              <Item.Description>{row.subCaption} <Label size="mini">by {row.subAddr}</Label></Item.Description>
+              <Item.Extra>
+
+
+              </Item.Extra>
+            </Item.Content>
+
+            <Item.Content style={{ paddingLeft: "10px" }}>
+              <div style={{ float: "right" }}>
+                <Button
+                  onClick={this.handleClickUpvote}
+                  icon='arrow up'
+                  color="blue"
+                  label={upVoteLabelObj}
+                  labelPosition='right'
+                  value={row.subId}
+                />
+                <Button
+                  onClick={this.handleClickDownvote}
+                  icon='arrow down'
+                  color="black"
+                  label={downVoteLabelObj}
+                  labelPosition='left'
+                  value={row.subId}
+                />
+              </div>
+            </Item.Content>
+
+          </Item>
+        );
+      }
 
     });
 
