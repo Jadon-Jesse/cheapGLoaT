@@ -7,16 +7,9 @@ import web3 from '../web3';
 import {
   Button,
   Container,
-  Divider,
-  Grid,
   Header,
   Icon,
-  Image,
-  List,
-  Menu,
   Segment,
-  Sidebar,
-  Visibility,
 } from 'semantic-ui-react';
 import linkoff from '../linkoff';
 import { Link, withRouter } from 'react-router-dom';
@@ -82,7 +75,7 @@ class HomeView extends Component {
     if (this.state.accountsAvailable === true) {
       submitButton = (
         <Link to={{ pathname: "/cheapGLoaT/submit" }}>
-          <Button primary size='huge'>
+          <Button primary size='huge' onClick={this.props.setRouteNewHandler}>
             Submit
             <Icon name='right arrow' />
           </Button>
@@ -92,12 +85,10 @@ class HomeView extends Component {
     else {
       submitButton = (
         <div>
-          <Link>
-            <Button primary size='huge' disabled>
-              Submit
+          <Button primary size='huge' disabled>
+            Submit
               <Icon name='right arrow' />
-            </Button>
-          </Link>
+          </Button>
           <p>(Unable to connect to web3 directly - try installing metamask to participate)</p>
         </div>
       );

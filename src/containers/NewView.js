@@ -118,14 +118,24 @@ class NewView extends Component {
     this.setState({
       loading: true,
     });
-    const result = await linkoff.methods.upvoteSubmissionById(sId).send({
-      from: this.state.accountList[0],
-      value: web3.utils.toWei("0.1", "ether")
-    });
-    console.log(result);
-    this.setState({
-      loading: false,
-    });
+    try {
+      const result = await linkoff.methods.upvoteSubmissionById(sId).send({
+        from: this.state.accountList[0],
+        value: web3.utils.toWei("0.1", "ether")
+      });
+      console.log(result);
+      this.setState({
+        loading: false,
+      });
+
+    } catch (error) {
+      console.log("Error, unable to upvote");
+      this.setState({
+        loading: false,
+      });
+
+    }
+
 
   }
 
@@ -157,10 +167,10 @@ class NewView extends Component {
 
       // check if this sub has data
       // if not, return empty component with unclickable buttons
-      console.log(row.subAddr);
-      console.log(typeof row.subAddr);
+      // console.log(row.subAddr);
+      // console.log(typeof row.subAddr);
 
-      const position = (index + 1)
+      const position = (index + 1);
 
 
       if (row.subAddr == ZERO_ADDR) {
@@ -178,7 +188,7 @@ class NewView extends Component {
             <Item.Content >
 
               <Item.Header >
-                <div class="container" >
+                <div className="container" >
                   <span title="">
                   </span>
                 </div>
@@ -233,7 +243,7 @@ class NewView extends Component {
             <Item.Content >
 
               <Item.Header href={row.subUrl} target='_blank'>
-                <div class="container" >
+                <div className="container" >
                   <span title={row.subUrl}>
                     {subUrlTruncated}
                   </span>

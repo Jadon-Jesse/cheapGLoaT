@@ -8,18 +8,12 @@ import linkoff from '../linkoff';
 import {
   Button,
   Container,
-  Divider,
-  Grid,
-  Header,
   Icon,
-  Image,
-  List,
   Menu,
   Segment,
   Label,
 } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
-
 
 class CustomLayout extends React.Component {
 
@@ -28,21 +22,18 @@ class CustomLayout extends React.Component {
   }
 
   state = {
-    gloatActive: false,
-    homeActive: true,
-    newActive: false,
-    aboutActive: false,
     web3Connected: false,
   };
+
 
   componentDidMount() {
     // const { pathname } = this.props.location;
     // console.log(pathname);
-    this.setCurrentMenuItemActive();
+    // this.setCurrentMenuItemActive();
+
     this.initPageData();
 
   }
-
 
   initPageData = async () => {
 
@@ -93,93 +84,7 @@ class CustomLayout extends React.Component {
     }
   }
 
-  setCurrentMenuItemActive = () => {
-    // const location = useLocation();
-    const { pathname } = this.props.location;
-    console.log(pathname);
-    if (pathname == "/cheapGLoaT/gloat") {
-      this.setState({
-        gloatActive: true,
-        homeActive: false,
-        newActive: false,
-        aboutActive: false
-      });
-    }
-    else if (pathname == "/cheapGLoaT/") {
-      this.setState({
-        gloatActive: false,
-        homeActive: true,
-        newActive: false,
-        aboutActive: false
-      });
 
-    }
-    else if (pathname == "/cheapGLoaT/new") {
-      this.setState({
-        gloatActive: false,
-        homeActive: false,
-        newActive: true,
-        aboutActive: false
-      });
-
-    }
-
-    else if (pathname == "/cheapGLoaT/about") {
-      this.setState({
-        gloatActive: false,
-        homeActive: false,
-        newActive: false,
-        aboutActive: true
-      });
-
-    }
-  }
-
-  handleMenuItemClick = (event, data) => {
-    // console.log(event);
-    // console.log(data);
-
-    // var pageName = data.children.props.children.props.children;
-    var pageName = event.target.innerText;
-    console.log(pageName);
-    if (pageName == "GLoaT") {
-      this.setState({
-        gloatActive: true,
-        homeActive: false,
-        newActive: false,
-        aboutActive: false
-      });
-    }
-    else if (pageName == "Home") {
-      this.setState({
-        gloatActive: false,
-        homeActive: true,
-        newActive: false,
-        aboutActive: false
-      });
-
-    }
-    else if (pageName == "New") {
-      this.setState({
-        gloatActive: false,
-        homeActive: false,
-        newActive: true,
-        aboutActive: false
-      });
-
-    }
-
-    else if (pageName == "About") {
-      this.setState({
-        gloatActive: false,
-        homeActive: false,
-        newActive: false,
-        aboutActive: true
-      });
-
-    }
-
-  }
 
 
   render() {
@@ -220,30 +125,30 @@ class CustomLayout extends React.Component {
             stackable
           >
             <Container>
-              <Menu.Item active={this.state.gloatActive} name="GloaT">
+              <Menu.Item name="GloaT">
                 <Button inverted >
                   <Link
                     to={{ pathname: "/cheapGLoaT/gloat" }}
-                    onClick={this.handleMenuItemClick}>
+                  >
                     GLoaT
                   </Link>
                 </Button>
               </Menu.Item>
 
-              <Menu.Item active={this.state.homeActive} name="Home" link >
-                <Link to={{ pathname: "/cheapGLoaT/" }} onClick={this.handleMenuItemClick}>
+              <Menu.Item name="Home" link >
+                <Link to={{ pathname: "/cheapGLoaT/" }} >
                   Home
                 </Link>
               </Menu.Item>
 
-              <Menu.Item active={this.state.newActive} name="New" link>
-                <Link to={{ pathname: "/cheapGLoaT/new" }} onClick={this.handleMenuItemClick}>
+              <Menu.Item name="New" link>
+                <Link to={{ pathname: "/cheapGLoaT/new" }} >
                   New
                 </Link>
               </Menu.Item>
 
-              <Menu.Item active={this.state.aboutActive} name="About" link>
-                <Link to={{ pathname: "/cheapGLoaT/about" }} onClick={this.handleMenuItemClick}>
+              <Menu.Item name="About" link>
+                <Link to={{ pathname: "/cheapGLoaT/about" }} >
                   About
                 </Link>
               </Menu.Item>
