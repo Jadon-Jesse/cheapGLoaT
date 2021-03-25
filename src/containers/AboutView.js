@@ -51,7 +51,9 @@ class AboutView extends Component {
               marginTop: '1em',
             }}
           >
-            About cheapGLoaT
+            <Header.Content>
+              About cheapGLoaT
+            </Header.Content>
           </Header>
         </Container>
       </Segment>

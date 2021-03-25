@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-// import './App.css';
-import { createMedia } from '@artsy/fresnel';
-import PropTypes from 'prop-types';
-// import web3 from './web3';
+import '../App.css';
+// import { createMedia } from '@artsy/fresnel';
+// import PropTypes from 'prop-types';
 import {
   Button,
   Container,
-  Divider,
-  Grid,
   Header,
-  Icon,
-  Image,
-  List,
-  Menu,
   Segment,
-  Sidebar,
-  Visibility,
   Item,
   Label
 } from 'semantic-ui-react';
@@ -35,42 +26,114 @@ class NewView extends Component {
     value: "",
     message: "",
     newSubs: [],
+    loading: false,
+    roundNum: null,
+    accountsAvailable: false,
+    accountList: []
   };
 
   componentDidMount() {
-    this.initSourceFeedViewData();
+    this.initPageData();
 
   }
 
-  initSourceFeedViewData = async () => {
+  initPageData = async () => {
+
     let accounts;
-
-    accounts = await web3.eth.getAccounts();
-    console.log(accounts);
-
-    var subs = [];
-
-    for (var i = 0; i < 3; i++) {
-      const subI = await linkoff.methods.submissions(i).call();
-      // var obj = {
-      //   subKey:i,
-      //   subData:subI
-      // };
-      subs.push(subI);
-
+    let accAvailable = false;
+    if (web3 !== null && linkoff !== null) {
+      // console.log(web3.version);
+      // console.log("Got3");
+      accounts = await web3.eth.getAccounts();
+      // console.log(accounts);
+      if (accounts.length > 0) {
+        accAvailable = true;
+      }
+      else {
+        accAvailable = false;
+      }
+    }
+    else {
+      accAvailable = false;
     }
 
+    if (accAvailable == true) {
+      // user has web3 available
+      // fetch list of current submissions
+      const rnum = await linkoff.methods.currentRoundNum().call();
+      // console.log(rnum);
 
-    // console.log(message);
-    this.setState({
-      newSubs: subs
-    });
+      this.setState({
+        roundNum: rnum,
+        loading: true,
+        accountsAvailable: accAvailable,
+        accountList: accounts,
+      });
+
+      var subs = [];
+
+      for (var i = 0; i < 20; i++) {
+        const subI = await linkoff.methods.submissions(i).call();
+        subs.push(subI);
+
+      }
+
+
+      // console.log(message);
+      this.setState({
+        newSubs: subs,
+        loading: false
+      });
+
+
+    }
+    else {
+      // user does not have web3
+      // let them know
+      this.setState({
+        roundNum: null,
+        loading: false,
+        accountsAvailable: accAvailable,
+      });
+    }
 
   };
 
 
+  handleClickUpvote = (data, event) => {
+    console.log("Upvote clicked");
+    // console.log(data);
+    const buttonClickId = event.value;
+    console.log(buttonClickId);
+    // now submit the users upvote to the network
+    this.submitUpvoteAsync(buttonClickId);
 
 
+  }
+
+  submitUpvoteAsync = async (sId) => {
+
+    this.setState({
+      loading: true,
+    });
+    const result = await linkoff.methods.upvoteSubmissionById(sId).send({
+      from: this.state.accountList[0],
+      value: web3.utils.toWei("0.1", "ether")
+    });
+    console.log(result);
+    this.setState({
+      loading: false,
+    });
+
+  }
+
+
+  handleClickDownvote = (data, event) => {
+    console.log("Downvote clicked");
+    // console.log(data);
+    const buttonClickId = event.value;
+    console.log(buttonClickId);
+  }
 
 
 
@@ -92,6 +155,10 @@ class NewView extends Component {
 
       const subUrlTruncated = truncate(row.subUrl, 42, 3);
       // console.log(row);
+
+      // create the upvote/downvote label objects for this row
+      const upVoteLabelObj = { basic: true, content: row.upvoteCount, color: "blue" };
+      const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount, color: "red" };
       return (
         <Item>
 
@@ -109,26 +176,30 @@ class NewView extends Component {
               </div>
 
             </Item.Header>
-            <Item.Description>{row.subCaption}</Item.Description>
+            <Item.Description>{row.subCaption} <Label size="mini">by {row.subAddr}</Label></Item.Description>
             <Item.Extra>
 
-              <Label>by {row.subAddr}</Label>
+
             </Item.Extra>
           </Item.Content>
 
           <Item.Content style={{ paddingLeft: "10px" }}>
             <div style={{ float: "right" }}>
               <Button
-                content='Like'
-                icon='heart'
-                label={{ basic: true, content: '2,048' }}
+                onClick={this.handleClickUpvote}
+                icon='arrow up'
+                color="blue"
+                label={upVoteLabelObj}
                 labelPosition='right'
+                value={row.subId}
               />
               <Button
-                content='Like'
-                icon='heart'
-                label={{ basic: true, pointing: 'right', content: '2,048' }}
+                onClick={this.handleClickDownvote}
+                icon='arrow down'
+                color="red"
+                label={downVoteLabelObj}
                 labelPosition='left'
+                value={row.subId}
               />
             </div>
           </Item.Content>
@@ -146,6 +217,7 @@ class NewView extends Component {
           textAlign='center'
           style={{ minHeight: 100, padding: '1em 0em' }}
           vertical
+          loading={this.state.loading}
         >
           <Container text>
             <Header
@@ -157,14 +229,18 @@ class NewView extends Component {
                 marginTop: '1em',
               }}
             >
-              New Submissions
+              <Header.Content>
+                Round ({this.state.roundNum}) Submissions
+              </Header.Content>
             </Header>
+
           </Container>
         </Segment>
 
         <Segment
           style={{ margin: '3em', padding: '1em 0em' }}
           vertical
+          size="small"
         >
           <Item.Group divided>
             {listItems}

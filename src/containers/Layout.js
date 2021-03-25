@@ -20,14 +20,6 @@ import {
 } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
 
-const { MediaContextProvider, Media } = createMedia({
-  breakpoints: {
-    mobile: 0,
-    tablet: 768,
-    computer: 1024,
-  },
-})
-
 
 class CustomLayout extends React.Component {
 
@@ -44,6 +36,9 @@ class CustomLayout extends React.Component {
   };
 
   componentDidMount() {
+    // const { pathname } = this.props.location;
+    // console.log(pathname);
+    this.setCurrentMenuItemActive();
     this.initPageData();
 
   }
@@ -80,9 +75,6 @@ class CustomLayout extends React.Component {
   };
 
 
-  hideFixedMenu = () => this.setState({ fixed: false })
-  showFixedMenu = () => this.setState({ fixed: true })
-
 
   handleConnectWeb3Click = (event, data) => {
     console.log("web3 connect clicked");
@@ -97,6 +89,48 @@ class CustomLayout extends React.Component {
       // User denied account access...
       console.log("Unable to enable web3");
       this.setState({ web3Connected: false });
+
+    }
+  }
+
+  setCurrentMenuItemActive = () => {
+    // const location = useLocation();
+    const { pathname } = this.props.location;
+    console.log(pathname);
+    if (pathname == "/cheapGLoaT/gloat") {
+      this.setState({
+        gloatActive: true,
+        homeActive: false,
+        newActive: false,
+        aboutActive: false
+      });
+    }
+    else if (pathname == "/cheapGLoaT/") {
+      this.setState({
+        gloatActive: false,
+        homeActive: true,
+        newActive: false,
+        aboutActive: false
+      });
+
+    }
+    else if (pathname == "/cheapGLoaT/new") {
+      this.setState({
+        gloatActive: false,
+        homeActive: false,
+        newActive: true,
+        aboutActive: false
+      });
+
+    }
+
+    else if (pathname == "/cheapGLoaT/about") {
+      this.setState({
+        gloatActive: false,
+        homeActive: false,
+        newActive: false,
+        aboutActive: true
+      });
 
     }
   }

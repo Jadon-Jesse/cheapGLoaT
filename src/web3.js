@@ -22,9 +22,9 @@ else {
   console.log("Please use metamask to enable web3");
   // todo: add custom provider for non-metamask users
   // try create provider
-  const provider = new Web3.providers.HttpProvider(INFURA_KEY);
-  // web3 = null;
-  web3 = new Web3(provider);
+  // const provider = new Web3.providers.HttpProvider(INFURA_KEY);
+  web3 = null;
+  // web3 = new Web3(provider);
 }
 
 

@@ -69,9 +69,6 @@ class HomeView extends Component {
     }
     this.setState({ accountsAvailable: accAvailable });
 
-
-
-
   };
 
 
@@ -110,7 +107,7 @@ class HomeView extends Component {
       <Segment
         inverted
         textAlign='center'
-        style={{ padding: '1em 0em', height: '100%' }}
+        style={{ padding: '1em 0em', height: '100vh' }}
         vertical
       >
         <Container text>
