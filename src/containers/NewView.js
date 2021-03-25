@@ -144,7 +144,35 @@ class NewView extends Component {
     console.log("Downvote clicked");
     // console.log(data);
     const buttonClickId = event.value;
-    console.log(buttonClickId);
+    this.submitUpvoteAsync(buttonClickId);
+
+  }
+
+
+  submitDownvotevoteAsync = async (sId) => {
+
+    this.setState({
+      loading: true,
+    });
+    try {
+      const result = await linkoff.methods.downvoteSubmissionById(sId).send({
+        from: this.state.accountList[0],
+        value: web3.utils.toWei("0.1", "ether")
+      });
+      console.log(result);
+      this.setState({
+        loading: false,
+      });
+
+    } catch (error) {
+      console.log("Error, unable to downvote");
+      this.setState({
+        loading: false,
+      });
+
+    }
+
+
   }
 
 

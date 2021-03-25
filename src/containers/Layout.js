@@ -125,8 +125,8 @@ class CustomLayout extends React.Component {
             stackable
           >
             <Container>
-              <Menu.Item name="GloaT">
-                <Button inverted >
+              <Menu.Item name="GloaT" link>
+                <Button inverted color="white">
                   <Link
                     to={{ pathname: "/cheapGLoaT/gloat" }}
                   >
