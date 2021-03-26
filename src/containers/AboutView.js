@@ -35,28 +35,39 @@ class AboutView extends Component {
   render() {
     let userLayout;
     userLayout = (
-      <Segment
-        inverted
-        textAlign='center'
-        style={{ minHeight: 100, padding: '1em 0em' }}
-        vertical
-      >
-        <Container text>
-          <Header
-            as='h1'
-            inverted
-            style={{
-              fontWeight: 'normal',
-              marginBottom: '1em',
-              marginTop: '1em',
-            }}
-          >
-            <Header.Content>
-              About cheapGLoaT
-            </Header.Content>
-          </Header>
-        </Container>
-      </Segment>
+      <div>
+        <Segment
+          inverted
+          textAlign='center'
+          style={{ minHeight: 100, padding: '1em 0em' }}
+          vertical
+        >
+          <Container text>
+            <Header
+              as='h1'
+              inverted
+              style={{
+                fontWeight: 'normal',
+                marginBottom: '1em',
+                marginTop: '1em',
+              }}
+            >
+              <Header.Content>
+                About cheapGLoaT
+              </Header.Content>
+            </Header>
+          </Container>
+
+        </Segment>
+        <Segment textAlign='center'>
+          <Container text>
+            Decentralized link aggrigation built on the cheapEthereum network
+
+          </Container>
+
+        </Segment>
+      </div>
+
     );
 
 

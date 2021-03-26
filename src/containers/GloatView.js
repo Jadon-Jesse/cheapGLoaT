@@ -14,7 +14,7 @@ import {
   Card
 } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
-import linkoff from '../linkoff';
+import cheapGloat from '../cheapGloat';
 import web3 from '../web3';
 
 const ZERO_ADDR = "0x0000000000000000000000000000000000000000";
@@ -48,7 +48,7 @@ class GloatView extends Component {
 
     let accounts;
     let accAvailable = false;
-    if (web3 !== null && linkoff !== null) {
+    if (web3 !== null && cheapGloat !== null) {
       // console.log(web3.version);
       // console.log("Got3");
       accounts = await web3.eth.getAccounts();
@@ -67,7 +67,7 @@ class GloatView extends Component {
     if (accAvailable == true) {
       // user has web3 available
       // fetch list of current submissions
-      // const rnum = await linkoff.methods.currentRoundNum().call();
+      // const rnum = await cheapGloat.methods.currentRoundNum().call();
       // console.log(rnum);
 
       this.setState({
@@ -77,16 +77,16 @@ class GloatView extends Component {
       });
 
       // first get the number of gloats
-      // const numGloats = await linkoff.methods.gloatIndex().call();
+      const numGloats = await cheapGloat.methods.gloatIndex().call();
 
       // use roundNum for now
-      const numGloats = await linkoff.methods.currentRoundNum().call();
+      // const numGloats = await cheapGloat.methods.currentRoundNum().call();
       // TODO: add paganation logic
 
       var glts = [];
       if (numGloats > 0) {
         for (var i = 0; i < numGloats; i++) {
-          const gloatI = await linkoff.methods.theGloats(i).call();
+          const gloatI = await cheapGloat.methods.theGloats(i).call();
           glts.push(gloatI);
 
         }
@@ -95,7 +95,7 @@ class GloatView extends Component {
       // var subs = [];
 
       // for (var i = 0; i < 20; i++) {
-      //   const subI = await linkoff.methods.submissions(i).call();
+      //   const subI = await cheapGloat.methods.submissions(i).call();
       //   subs.push(subI);
 
       // }

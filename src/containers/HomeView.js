@@ -11,7 +11,7 @@ import {
   Icon,
   Segment,
 } from 'semantic-ui-react';
-import linkoff from '../linkoff';
+import cheapGloat from '../cheapGloat';
 import { Link, withRouter } from 'react-router-dom';
 
 class HomeView extends Component {
@@ -45,7 +45,7 @@ class HomeView extends Component {
     let usrNxt = false;
 
 
-    if (web3 !== null && linkoff !== null) {
+    if (web3 !== null && cheapGloat !== null) {
       // console.log(web3.version);
       // console.log("Got3");
       accounts = await web3.eth.getAccounts();
@@ -58,8 +58,8 @@ class HomeView extends Component {
 
       }
 
-      const message = await linkoff.methods.chairperson().call();
-      const roundStart = await linkoff.methods.roundStartTime().call();
+      // const message = await cheapGloat.methods.chairperson().call();
+      const roundStart = await cheapGloat.methods.roundStartTime().call();
       var roundStartDt = new Date(roundStart * 1000);
       console.log("Round Start:", roundStart, "as dt", roundStartDt);
 
@@ -97,7 +97,7 @@ class HomeView extends Component {
   callNextRoundPickWinner = async () => {
     this.setState({ loading: true });
     try {
-      const result = await linkoff.methods.checkIfNextRoundAndPickWinner().send({
+      const result = await cheapGloat.methods.checkIfNextRoundAndPickWinner().send({
         from: this.state.accountList[0],
         gas: "5000000",
       });

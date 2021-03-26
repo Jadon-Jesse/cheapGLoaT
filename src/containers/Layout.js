@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import '../App.css';
-import { createMedia } from '@artsy/fresnel';
-import PropTypes from 'prop-types';
+// import { createMedia } from '@artsy/fresnel';
+// import PropTypes from 'prop-types';
 import web3 from '../web3';
-import linkoff from '../linkoff';
+import cheapGloat from '../cheapGloat';
 import {
   Button,
   Container,
@@ -40,7 +40,7 @@ class CustomLayout extends React.Component {
     let accounts;
     let w3Available = false;
 
-    if (web3 !== null && linkoff !== null) {
+    if (web3 !== null && cheapGloat !== null) {
       // console.log(web3.version);
       // console.log("Got3");
       accounts = await web3.eth.getAccounts();
