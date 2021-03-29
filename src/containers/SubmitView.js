@@ -29,7 +29,14 @@ import cheapGloat from '../cheapGloat';
 
 class SubmitView extends Component {
 
-  state = { linkUrl: '', linkCaption: '', submittedLinkUrl: '', submittedLinkCaption: '', message: '' };
+  state = {
+    linkUrl: '',
+    linkCaption: '',
+    submittedLinkUrl: '',
+    submittedLinkCaption: '',
+    message: '',
+    loading: false,
+  };
 
   constructor(props) {
     super(props);
@@ -41,7 +48,10 @@ class SubmitView extends Component {
     const { linkUrl, linkCaption } = this.state;
     console.log("Submitted ", linkUrl, linkCaption);
 
-    this.setState({ submittedLinkUrl: linkUrl, submittedLinkCaption: linkCaption });
+    this.setState({
+      submittedLinkUrl: linkUrl,
+      submittedLinkCaption: linkCaption,
+    });
 
     this.onSubmit();
   }
@@ -53,15 +63,25 @@ class SubmitView extends Component {
   onSubmit = async () => {
     // event.preventDefault();
 
-    const accounts = await web3.eth.getAccounts();
+    try {
+      const accounts = await web3.eth.getAccounts();
 
-    this.setState({ message: "Pending" });
+      this.setState({ message: "Pending", loading: true });
 
-    await cheapGloat.methods.submitLink(this.state.submittedLinkUrl, this.state.submittedLinkCaption).send({
-      from: accounts[0]
-    });
+      await cheapGloat.methods.submitLink(this.state.submittedLinkUrl, this.state.submittedLinkCaption).send({
+        from: accounts[0]
+      });
 
-    this.setState({ message: "Done" });
+      this.setState({ message: "Done", loading: false });
+
+    }
+    catch (error) {
+      console.log("Error submitting");
+      this.setState({ message: "Error", loading: false });
+
+    }
+
+
 
   };
 
@@ -73,7 +93,8 @@ class SubmitView extends Component {
     let userLayout;
 
     // const { name, email, submittedName, submittedEmail } = this.state;
-    const { linkUrl, linkCaption } = this.state;
+    // const { linkUrl, linkCaption } = this.state;
+    // if 
 
     userLayout = (
       <Segment
@@ -83,12 +104,12 @@ class SubmitView extends Component {
           <Grid.Column style={{ maxWidth: 450 }}>
             <Card centered fluid>
               <Card.Content>
-                <Form onSubmit={this.handleSubmit}>
+                <Form loading={this.state.loading} onSubmit={this.handleSubmit}>
                   <Form.Field>
                     <label>Link Url</label>
                     <TextArea
                       name='linkUrl'
-                      value={linkUrl}
+                      value={this.state.linkUrl}
                       onChange={this.handleChange}
                       placeholder='Enter the plain text url'
                     />
@@ -97,7 +118,7 @@ class SubmitView extends Component {
                     <label>Caption</label>
                     <Form.Input
                       name='linkCaption'
-                      value={linkCaption}
+                      value={this.state.linkCaption}
                       onChange={this.handleChange}
                       placeholder='Enter text caption' />
                   </Form.Field>
