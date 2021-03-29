@@ -61,9 +61,9 @@ class AboutView extends Component {
         </Segment>
         <Segment textAlign='center'>
           <Container text>
-            Decentralized link aggrigation built on the cheapEthereum network
-
+            Decentralized link aggrigation built on the cheapEthereum network (Work in progress)
           </Container>
+
 
         </Segment>
       </div>
