@@ -141,7 +141,7 @@ class GloatView extends Component {
         }
       }
 
-      const position = (index + 1);
+      // const position = (index + 1);
 
 
       if (row.subAddr == ZERO_ADDR) {
@@ -150,10 +150,10 @@ class GloatView extends Component {
         const upVoteLabelObj = { basic: true, content: row.upvoteCount };
         const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount };
         return (
-          <Item key={position}>
+          <Item key={index}>
 
             <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
-              <Item.Header>{position}.</Item.Header>
+              <Item.Header>{index}.</Item.Header>
             </Item.Content>
 
             <Item.Content >
@@ -202,13 +202,13 @@ class GloatView extends Component {
 
 
         // create the upvote/downvote label objects for this row
-        const upVoteLabelObj = { basic: true, content: row.upvoteCount, color: "blue" };
-        const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount, color: "black" };
+        const upVoteLabelObj = { basic: true, content: row.upvoteCount };
+        const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount };
         return (
           <Item key={index}>
 
             <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
-              <Item.Header>{row.roundNumber}.</Item.Header>
+              <Item.Header>{index}.</Item.Header>
             </Item.Content>
 
             <Item.Content >
@@ -231,6 +231,7 @@ class GloatView extends Component {
             <Item.Content style={{ paddingLeft: "10px" }}>
               <div style={{ float: "right" }}>
                 <Button
+                  disabled
                   icon='arrow up'
                   color="blue"
                   label={upVoteLabelObj}
@@ -238,6 +239,7 @@ class GloatView extends Component {
                   value={row.subId}
                 />
                 <Button
+                  disabled
                   icon='arrow down'
                   color="black"
                   label={downVoteLabelObj}

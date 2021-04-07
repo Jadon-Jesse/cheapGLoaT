@@ -244,7 +244,6 @@ class NewView extends Component {
       // console.log(row.subAddr);
       // console.log(typeof row.subAddr);
 
-      const position = (index + 1);
 
 
       if (row.subAddr == ZERO_ADDR) {
@@ -253,10 +252,10 @@ class NewView extends Component {
         const upVoteLabelObj = { basic: true, content: row.upvoteCount };
         const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount };
         return (
-          <Item key={position}>
+          <Item key={index}>
 
             <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
-              <Item.Header>{position}.</Item.Header>
+              <Item.Header>{index}.</Item.Header>
             </Item.Content>
 
             <Item.Content >
@@ -308,10 +307,10 @@ class NewView extends Component {
         const upVoteLabelObj = { basic: true, content: row.upvoteCount, color: "blue" };
         const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount, color: "black" };
         return (
-          <Item key={position}>
+          <Item key={index}>
 
             <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
-              <Item.Header>{position}.</Item.Header>
+              <Item.Header>{index}.</Item.Header>
             </Item.Content>
 
             <Item.Content >

@@ -6,7 +6,7 @@ let ethContract;
 if (web3 !== null) {
     console.log(web3.version);
     console.log("Got3");
-    const address = '0xC6c30B5DFa848A8778a89b19301761162743D19c';
+    const address = '0xa7663867ce5642C33A4840f2803c9Fb6eE3CB94C';
     const contractObj = [
         {
             "inputs": [],

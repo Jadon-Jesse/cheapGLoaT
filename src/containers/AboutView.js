@@ -66,7 +66,7 @@ class AboutView extends Component {
           <Container text>
             <b>cheapGLoaT</b>
             <Divider />
-            "Greatest Links of all Time" is a decentralized link aggrigation system built on the cheapEthereum network
+            "Greatest Links of all Time" is a decentralized link aggregation system built on the cheapEthereum network
           </Container>
 
 
@@ -88,7 +88,7 @@ class AboutView extends Component {
                   A<b> unique user </b>is a user who has not yet made a submission in the current round
                   <br />
                   <br />
-                  A<b> unique link </b>is a link which has not yet been submistted in the current round and also has
+                  A<b> unique link </b>is a link which has not yet been submitted in the current round and also has
                     not already been entered into the Greatest Links of all Time
 
                 </Message>
@@ -97,12 +97,12 @@ class AboutView extends Component {
                 Each round<b> general users </b>are allowed to view and interact with the current round submissions
                 by visiting the "New" tab
                 <Message size='mini'>
-                  <b> general users </b>are the set of users who have sucessfully connected to the cheapGLoaT frontend via metamask
+                  <b> general users </b>are the set of users who have successfully connected to the cheapGLoaT front-end via MetaMask
 
                 </Message>
               </List.Item>
               <List.Item as="li">
-                Each round a general user is allowed to <b>upvote </b>multiple submissions but is not allowed to <b>upvote </b>the same submission more than once
+                Each round a general user is allowed to <b>up-vote </b>multiple submissions but is not allowed to <b>up-vote </b>the same submission more than once
                 <Message size="mini">
                   <Button
                     icon='arrow up'
@@ -110,14 +110,14 @@ class AboutView extends Component {
                     label={upVoteLabelObj}
                     labelPosition='right'
                   />
-                  1 <b>upvote </b>costs a minimum of 0.5 ceth
+                  1 <b>up-vote </b>costs a minimum of 0.5 ceth
 
                 </Message>
 
 
               </List.Item>
               <List.Item as="li">
-                Each round a general user is allowed to <b>downvote </b>multiple submissions but is not allowed to <b>downvote </b>the same submission more than once
+                Each round a general user is allowed to <b>down-vote </b>multiple submissions but is not allowed to <b>down-vote </b>the same submission more than once
                 <Message size="mini">
 
                   <Button
@@ -126,18 +126,18 @@ class AboutView extends Component {
                     label={downVoteLabelObj}
                     labelPosition='left'
                   />
-                  1 <b>downvote </b>costs a minimum of 0.5 ceth
+                  1 <b>down-vote </b>costs a minimum of 0.5 ceth
                 </Message>
 
               </List.Item>
               <List.Item as="li">
                 Each round a<b> prize pool </b>is formed so that the winnings can be distributed appropriately
                 <Message size='mini'>
-                  The<b> prize pool </b>is the value of the of the total number of upvotes, accross all submissions, for that round (downvotes are not included)
+                  The<b> prize pool </b>is the value of the of the total number of up-votes, across all submissions, for that round (down-votes are not included)
                   <br />
                   <br />
-                  For example, if there were 3 submissions in the current round; Submission A with 3 upvotes, Submission B with 2 upvotes and Submission C with 1 upvote and 5 downvotes.
-                  Then, that round's <b>prize pool</b> will be = (0.5 ceth * (3+2+1)) = 3 ceth
+                  For example, if there were 3 submissions in the current round; Submission A with 3 up-votes, Submission B with 2 up-votes and Submission C with 1 up-vote and 5 down-votes.
+                  Then, that rounds <b>prize pool</b> will be = (0.5 ceth * (3+2+1)) = 3 ceth
                   <br />
                   <br />
                   The<b> prize pool </b>for a round is distributed as follows; 70% goes to the winner, 20% to the lucky caller, 10% to the manager
@@ -146,13 +146,13 @@ class AboutView extends Component {
               <List.Item as="li">
                 The<b> winner </b>of each round will be the submission with the highest <b>score</b> (or earliest submission)
                 <Message size='mini'>
-                  The<b> winner </b>will recieve 70% of the total prize pool for that that round
+                  The<b> winner </b>will receive 70% of the total prize pool for that that round
                   <br />
                   <br />
                   The<b> winner's </b>submission will be entered into the Greatest Links of all Time
                   <br />
                   <br />
-                  The<b> score </b>for a submission is calculated by taking the difference between it's number of upvotes and it's number of downvotes
+                  The<b> score </b>for a submission is calculated by taking the difference between it's number of up-votes and it's number of down-votes
                 </Message>
               </List.Item>
               <List.Item as="li">
@@ -168,7 +168,7 @@ class AboutView extends Component {
                   Since the <b>checkIfNextRoundAndPickWinner </b>function carries out most of the contract logic, the gas price to execute can get a bit high (min 5000000 wei)
                   <br />
                   <br />
-                  So if a user sucessfully executes the <b>checkIfNextRoundAndPickWinner </b>function, they will recieve 20% of the total prize pool for that round
+                  So if a user successfully executes the <b>checkIfNextRoundAndPickWinner </b>function, they will receive 20% of the total prize pool for that round
 
                 </Message>
 
@@ -203,8 +203,25 @@ class AboutView extends Component {
                 </Item.Header>
               </List.Item>
               <List.Item as="li">
-                <Item.Header href="https://github.com/Jadon-Jesse/cheapGLoaT" target='_blank'>cheapGLoaT react frontend source code
+                <Item.Header href="https://github.com/Jadon-Jesse/cheapGLoaT" target='_blank'>cheapGLoaT react front-end source code
                 </Item.Header>
+              </List.Item>
+            </List>
+          </Container>
+
+
+        </Segment>
+
+        <Segment textAlign='justified'>
+          <Container text>
+            <b>Support</b>
+            <Divider />
+            <List as="ul">
+              <List.Item icon>
+                <Icon name="ethereum" /> 0x6D126F7882EfE24587039bADE81843178e8DdC86
+              </List.Item>
+              <List.Item icon>
+                <Icon name="btc" /> 3CYmGwB9oBnN7xMS9LpJv45DMibWjrz6bN
               </List.Item>
             </List>
           </Container>
