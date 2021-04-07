@@ -28,7 +28,9 @@ class NewView extends Component {
     loading: false,
     roundNum: null,
     accountsAvailable: false,
-    accountList: []
+    accountList: [],
+    upvoteIsLoading: [],
+    downvoteIsLoading: [],
   };
 
   componentDidMount() {
@@ -70,10 +72,14 @@ class NewView extends Component {
       });
 
       var subs = [];
+      var loadingUs = [];
+      var loadingDs = [];
 
       for (var i = 0; i < 20; i++) {
         const subI = await cheapGloat.methods.submissions(i).call();
         subs.push(subI);
+        loadingUs.push(false);
+        loadingDs.push(false);
 
       }
 
@@ -81,7 +87,9 @@ class NewView extends Component {
       // console.log(message);
       this.setState({
         newSubs: subs,
-        loading: false
+        loading: false,
+        upvoteIsLoading: loadingUs,
+        downvoteIsLoading: loadingDs
       });
 
 
@@ -132,6 +140,7 @@ class NewView extends Component {
     // console.log(data);
     const buttonClickId = event.value;
     // console.log(buttonClickId);
+    console.log("Upvote clicked on subID:", buttonClickId);
     // now submit the users upvote to the network
     this.submitUpvoteAsync(buttonClickId);
 
@@ -143,9 +152,14 @@ class NewView extends Component {
 
 
   submitUpvoteAsync = async (sId) => {
+    // update the state of the clicked button
+    var upvotesLoading = this.state.upvoteIsLoading;
+    // change state of the button to loading
+    upvotesLoading[sId] = true;
 
     this.setState({
       loading: true,
+      upvoteIsLoading: upvotesLoading
     });
     try {
       const result = await cheapGloat.methods.upvoteSubmissionById(sId).send({
@@ -157,16 +171,21 @@ class NewView extends Component {
 
       // Finally update this items vote count only
       await this.updateSubVotesAtId(sId);
+      upvotesLoading[sId] = false;
+
 
 
       this.setState({
         loading: false,
+        upvoteIsLoading: upvotesLoading
       });
 
     } catch (error) {
       console.log("Error, unable to upvote. Err:", error);
+      upvotesLoading[sId] = false;
       this.setState({
         loading: false,
+        upvoteIsLoading: upvotesLoading
       });
 
     }
@@ -176,9 +195,9 @@ class NewView extends Component {
 
 
   handleClickDownvote = (data, event) => {
-    // console.log("Downvote clicked");
     // console.log(data);
     const buttonClickId = event.value;
+    console.log("Downvote clicked on subID:", buttonClickId);
     this.submitDownvotevoteAsync(buttonClickId);
     // Finally update this items vote count only
     // this.updateSubVotesAtId(buttonClickId);
@@ -188,10 +207,16 @@ class NewView extends Component {
 
 
   submitDownvotevoteAsync = async (sId) => {
+    // update the state of the clicked button
+    var downvotesLoading = this.state.downvoteIsLoading;
+    // change state of the button to loading
+    downvotesLoading[sId] = true;
 
     this.setState({
       loading: true,
+      downvoteIsLoading: downvotesLoading
     });
+
     try {
       const result = await cheapGloat.methods.downvoteSubmissionById(sId).send({
         from: this.state.accountList[0],
@@ -202,15 +227,20 @@ class NewView extends Component {
 
       // Finally update this items vote count only
       await this.updateSubVotesAtId(sId);
+      downvotesLoading[sId] = false;
+
 
       this.setState({
         loading: false,
+        downvoteIsLoading: downvotesLoading
       });
 
     } catch (error) {
       console.log("Error, unable to downvote. Err:", error);
+      downvotesLoading[sId] = false;
       this.setState({
         loading: false,
+        downvoteIsLoading: downvotesLoading
       });
 
     }
@@ -330,6 +360,7 @@ class NewView extends Component {
             <Item.Content style={{ paddingLeft: "10px" }}>
               <div style={{ float: "right" }}>
                 <Button
+                  loading={this.state.upvoteIsLoading[index]}
                   onClick={this.handleClickUpvote}
                   icon='arrow up'
                   color="blue"
@@ -338,6 +369,7 @@ class NewView extends Component {
                   value={row.subId}
                 />
                 <Button
+                  loading={this.state.downvoteIsLoading[index]}
                   onClick={this.handleClickDownvote}
                   icon='arrow down'
                   color="black"
