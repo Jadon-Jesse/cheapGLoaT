@@ -75,7 +75,7 @@ class NewView extends Component {
       var loadingUs = [];
       var loadingDs = [];
 
-      for (var i = 0; i < 20; i++) {
+      for (var i = 0; i < 69; i++) {
         const subI = await cheapGloat.methods.submissions(i).call();
         subs.push(subI);
         loadingUs.push(false);
