@@ -141,7 +141,7 @@ class HomeView extends Component {
 
     if (this.state.accountsAvailable === true) {
       submitButton = (
-        <Link to={{ pathname: "/cheapGLoaT/submit" }}>
+        <Link to={{ pathname: "/submit" }}>
           <Button primary size='huge' icon labelPosition='right'>
             Submit
             <Icon name='right arrow' />
@@ -211,7 +211,7 @@ class HomeView extends Component {
               marginTop: '1.5em',
             }}
           >
-            <p>Or browse <Link to={{ pathname: "/cheapGLoaT/new" }}>new submissions</Link></p>
+            <p>Or browse <Link to={{ pathname: "/new" }}>new submissions</Link></p>
 
           </Header>
           {this.state.curMsg}

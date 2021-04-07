@@ -125,7 +125,7 @@ class CustomLayout extends React.Component {
               <Menu.Item name="GloaT" link>
                 <Button inverted>
                   <Link
-                    to={{ pathname: "/cheapGLoaT/gloat" }}
+                    to={{ pathname: "/gloat" }}
                   >
                     GLoaT
                   </Link>
@@ -133,25 +133,25 @@ class CustomLayout extends React.Component {
               </Menu.Item>
 
               <Menu.Item name="Home" link >
-                <Link to={{ pathname: "/cheapGLoaT/" }} >
+                <Link to={{ pathname: "/" }} >
                   Home
                 </Link>
               </Menu.Item>
 
               <Menu.Item name="New" link>
-                <Link to={{ pathname: "/cheapGLoaT/new" }} >
+                <Link to={{ pathname: "/new" }} >
                   New
                 </Link>
               </Menu.Item>
 
               <Menu.Item name="New" link>
-                <Link to={{ pathname: "/cheapGLoaT/submit" }} >
+                <Link to={{ pathname: "/submit" }} >
                   Submit
                 </Link>
               </Menu.Item>
 
               <Menu.Item name="About" link>
-                <Link to={{ pathname: "/cheapGLoaT/about" }} >
+                <Link to={{ pathname: "/about" }} >
                   About
                 </Link>
               </Menu.Item>

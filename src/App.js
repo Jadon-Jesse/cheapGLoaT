@@ -14,7 +14,7 @@ class App extends Component {
 
     return (
       <div>
-        <Router>
+        <Router basename="/cheapGLoaT">
           <CustomLayout {...this.props}>
             <BaseRouter />
           </CustomLayout>
