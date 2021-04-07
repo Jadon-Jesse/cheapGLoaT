@@ -102,6 +102,34 @@ class NewView extends Component {
   };
 
 
+  updateSubVotesAtId = async (sId) => {
+    this.setState({
+      loading: true,
+    });
+    try {
+      // get the updated upvote/downvote count
+      const subI = await cheapGloat.methods.submissions(sId).call();
+      // now update the state newSub array at the position
+      var subList = this.state.newSubs;
+      subList[sId] = subI;
+      // subs.push(subI);
+      // console.log(result);
+      this.setState({
+        newSubs: subList,
+        loading: false,
+      });
+
+    } catch (error) {
+      console.log("Error, unable to update submission vote count");
+      this.setState({
+        loading: false,
+      });
+
+    }
+
+  }
+
+
   handleClickUpvote = (data, event) => {
     console.log("Upvote clicked");
     // console.log(data);
@@ -111,7 +139,11 @@ class NewView extends Component {
     this.submitUpvoteAsync(buttonClickId);
 
 
+
+
   }
+
+
 
   submitUpvoteAsync = async (sId) => {
 
@@ -121,9 +153,15 @@ class NewView extends Component {
     try {
       const result = await cheapGloat.methods.upvoteSubmissionById(sId).send({
         from: this.state.accountList[0],
-        value: web3.utils.toWei("0.1", "ether")
+        value: web3.utils.toWei("0.5", "finney"),
+        gas: "1000000"
       });
       console.log(result);
+
+      // Finally update this items vote count only
+      await this.updateSubVotesAtId(sId);
+
+
       this.setState({
         loading: false,
       });
@@ -145,6 +183,9 @@ class NewView extends Component {
     // console.log(data);
     const buttonClickId = event.value;
     this.submitDownvotevoteAsync(buttonClickId);
+    // Finally update this items vote count only
+    // this.updateSubVotesAtId(buttonClickId);
+
 
   }
 
@@ -157,9 +198,14 @@ class NewView extends Component {
     try {
       const result = await cheapGloat.methods.downvoteSubmissionById(sId).send({
         from: this.state.accountList[0],
-        value: web3.utils.toWei("0.1", "ether")
+        value: web3.utils.toWei("0.5", "finney"),
+        gas: "1000000"
       });
-      console.log(result);
+      // console.log(result);
+
+      // Finally update this items vote count only
+      await this.updateSubVotesAtId(sId);
+
       this.setState({
         loading: false,
       });
@@ -262,10 +308,10 @@ class NewView extends Component {
         const upVoteLabelObj = { basic: true, content: row.upvoteCount, color: "blue" };
         const downVoteLabelObj = { basic: true, pointing: 'right', content: row.downvoteCount, color: "black" };
         return (
-          <Item key={index}>
+          <Item key={position}>
 
             <Item.Content style={{ maxWidth: "40px", minWidth: "40px" }} >
-              <Item.Header>{row.subId}.</Item.Header>
+              <Item.Header>{position}.</Item.Header>
             </Item.Content>
 
             <Item.Content >

@@ -6,7 +6,7 @@ let ethContract;
 if (web3 !== null) {
     console.log(web3.version);
     console.log("Got3");
-    const address = '0x738a6F545fe742d64E7496Eb95CdbEe7541012C0';
+    const address = '0xC6c30B5DFa848A8778a89b19301761162743D19c';
     const contractObj = [
         {
             "inputs": [],
@@ -60,6 +60,19 @@ if (web3 !== null) {
                     "internalType": "uint256",
                     "name": "",
                     "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "locked",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
                 }
             ],
             "stateMutability": "view",

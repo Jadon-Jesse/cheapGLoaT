@@ -46,11 +46,12 @@ class SubmitView extends Component {
   handleSubmit = () => {
     // this.setState({ email: '', name: '' });
     const { linkUrl, linkCaption } = this.state;
-    console.log("Submitted ", linkUrl, linkCaption);
+    console.log("Submitted", linkUrl, linkCaption);
+    console.log("Trimmed", linkUrl.trim(), linkCaption);
 
     this.setState({
-      submittedLinkUrl: linkUrl,
-      submittedLinkCaption: linkCaption,
+      submittedLinkUrl: linkUrl.trim(),
+      submittedLinkCaption: linkCaption.trim(),
     });
 
     this.onSubmit();
@@ -124,6 +125,7 @@ class SubmitView extends Component {
                   </Form.Field>
                   <Button type='submit'>Submit</Button>
                 </Form>
+                <p>{this.state.message}</p>
               </Card.Content>
             </Card>
           </Grid.Column>
@@ -135,7 +137,7 @@ class SubmitView extends Component {
     return (
       <div>
         {userLayout}
-        <p>{this.state.message}</p>
+
       </div>
     );
   }

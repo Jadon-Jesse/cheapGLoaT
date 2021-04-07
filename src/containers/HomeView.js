@@ -52,38 +52,48 @@ class HomeView extends Component {
       // console.log(accounts);
       if (accounts.length > 0) {
         accAvailable = true;
+
+        // check if user can call next
+        // const message = await cheapGloat.methods.chairperson().call();
+        const roundStart = await cheapGloat.methods.roundStartTime().call();
+        const roundLocked = await cheapGloat.methods.locked().call();
+        var roundStartDt = new Date(roundStart * 1000);
+        console.log("Round Start:", roundStart, "as dt", roundStartDt);
+
+        const userNow = new Date(Date.now());
+        console.log("User Now", userNow);
+        // get diff between round start and users now in milisecs
+        const dtMili = Math.abs(userNow - roundStartDt);
+        console.log(dtMili);
+
+        // const milsRoundInt = 21600000;
+        const milsRoundInt = 600000;
+
+        if (dtMili > milsRoundInt && roundLocked === false) {
+          // enable pick winner for the current user
+          usrNxt = true;
+        }
+        else {
+          usrNxt = false;
+
+        }
       }
       else {
         accAvailable = false;
+        usrNxt = false;
 
       }
-
-      // const message = await cheapGloat.methods.chairperson().call();
-      const roundStart = await cheapGloat.methods.roundStartTime().call();
-      var roundStartDt = new Date(roundStart * 1000);
-      console.log("Round Start:", roundStart, "as dt", roundStartDt);
-
-      const userNow = new Date(Date.now());
-      console.log("User Now", userNow);
-      // get diff between round start and users now in milisecs
-      const dtMili = Math.abs(userNow - roundStartDt);
-      console.log(dtMili);
-
-      // const milsRoundInt = 21600000;
-      const milsRoundInt = 21600;
-
-      if (dtMili > milsRoundInt) {
-        // enable pick winner for the current user
-        usrNxt = true;
-
-      }
-
     }
     else {
       accAvailable = false;
+      usrNxt = false;
 
     }
-    this.setState({ accountsAvailable: accAvailable, userCanCallNext: usrNxt, accountList: accounts });
+    this.setState({
+      accountsAvailable: accAvailable,
+      userCanCallNext: usrNxt,
+      accountList: accounts
+    });
 
   };
 
@@ -133,7 +143,7 @@ class HomeView extends Component {
             Submit
               <Icon name='right arrow' />
           </Button>
-          <p>(Unable to connect to web3 directly - try installing metamask to participate)</p>
+          <p>(Unable to connect to web3 directly - Refresh the page OR try installing metamask to participate)</p>
         </div>
       );
     }

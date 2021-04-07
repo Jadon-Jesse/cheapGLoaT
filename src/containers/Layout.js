@@ -147,6 +147,12 @@ class CustomLayout extends React.Component {
                 </Link>
               </Menu.Item>
 
+              <Menu.Item name="New" link>
+                <Link to={{ pathname: "/cheapGLoaT/submit" }} >
+                  Submit
+                </Link>
+              </Menu.Item>
+
               <Menu.Item name="About" link>
                 <Link to={{ pathname: "/cheapGLoaT/about" }} >
                   About
