@@ -1,7 +1,8 @@
 # CheapGLoaT React App
 
-Frontend app for cheapgloat contract
+"Greatest Links of all Time" is a decentralized link aggregation system built on the cheapEthereum network and hosted for free on github.io
 
+![alt text](https://github.com/Jadon-Jesse/cheapGLoaT/blob/master/assets/cheapGLoaTHome.PNG?raw=true)
 
 # TODO:
-* refresh upvoted/downvoted sub only
+* Add pagination to the GLoaT tab
