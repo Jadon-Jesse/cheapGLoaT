@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import '../App.css';
-// import { createMedia } from '@artsy/fresnel';
-// import PropTypes from 'prop-types';
-// import web3 from './web3';
 import {
   Button,
   Container,
@@ -11,9 +7,8 @@ import {
   Segment,
   Item,
   Label,
-  Card
 } from 'semantic-ui-react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import cheapGloat from '../cheapGloat';
 import web3 from '../web3';
 
@@ -64,7 +59,7 @@ class GloatView extends Component {
       accAvailable = false;
     }
 
-    if (accAvailable == true) {
+    if (accAvailable === true) {
       // user has web3 available
       // fetch list of current submissions
       // const rnum = await cheapGloat.methods.currentRoundNum().call();

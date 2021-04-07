@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import '../App.css';
-// import { createMedia } from '@artsy/fresnel';
-// import PropTypes from 'prop-types';
 import web3 from '../web3';
 import cheapGloat from '../cheapGloat';
 import {
@@ -68,7 +65,7 @@ class CustomLayout extends React.Component {
 
 
   handleConnectWeb3Click = (event, data) => {
-    console.log("web3 connect clicked");
+    // console.log("web3 connect clicked");
     // console.log(event);
     // console.log(data);
     try {
@@ -126,7 +123,7 @@ class CustomLayout extends React.Component {
           >
             <Container>
               <Menu.Item name="GloaT" link>
-                <Button inverted color="white">
+                <Button inverted>
                   <Link
                     to={{ pathname: "/cheapGLoaT/gloat" }}
                   >
@@ -166,7 +163,7 @@ class CustomLayout extends React.Component {
             </Container>
           </Menu>
         </Segment>
-        { this.props.children}
+        {this.props.children}
       </div>
 
 

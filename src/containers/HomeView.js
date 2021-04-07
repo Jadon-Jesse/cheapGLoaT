@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import '../App.css';
-import { createMedia } from '@artsy/fresnel';
-import PropTypes from 'prop-types';
 import web3 from '../web3';
 import {
   Button,
@@ -56,20 +53,31 @@ class HomeView extends Component {
         // check if user can call next
         // const message = await cheapGloat.methods.chairperson().call();
         const roundStart = await cheapGloat.methods.roundStartTime().call();
+        const roundIntSecs = await cheapGloat.methods.roundIntervalSeconds().call();
         const roundLocked = await cheapGloat.methods.locked().call();
         var roundStartDt = new Date(roundStart * 1000);
-        console.log("Round Start:", roundStart, "as dt", roundStartDt);
+        // console.log("Round Start:", roundStart, "as dt", roundStartDt);
 
         const userNow = new Date(Date.now());
-        console.log("User Now", userNow);
+        // console.log("User Now", userNow);
         // get diff between round start and users now in milisecs
         const dtMili = Math.abs(userNow - roundStartDt);
-        console.log(dtMili);
+        // console.log(dtMili);
 
         // const milsRoundInt = 21600000;
         const milsRoundInt = 600000;
+        // convert contract round interval to miliseconds
+        const contractIntMili = roundIntSecs * 1000;
 
-        if (dtMili > milsRoundInt && roundLocked === false) {
+        // calc  time until user can call next
+        // RoundInterval - dtMili
+        const nxtRoundStartInSec = (contractIntMili - dtMili) / 1000;
+        console.log("Next round available in: ", nxtRoundStartInSec, " seconds");
+
+
+
+
+        if (dtMili > contractIntMili && roundLocked === false) {
           // enable pick winner for the current user
           usrNxt = true;
         }
@@ -98,7 +106,7 @@ class HomeView extends Component {
   };
 
   handleClickCallNextRound = () => {
-    console.log("User called next");
+    // console.log("User called next");
     // now try call next round async
     this.callNextRoundPickWinner();
 
@@ -111,10 +119,15 @@ class HomeView extends Component {
         from: this.state.accountList[0],
         gas: "5000000",
       });
+      this.setState({
+        loading: false,
+        userCanCallNext: false
+      });
     } catch (error) {
       console.log("Error, unable to pick winner. Err:", error);
+      this.setState({ loading: false });
     }
-    this.setState({ loading: false });
+
   }
 
 
@@ -143,7 +156,7 @@ class HomeView extends Component {
             Submit
               <Icon name='right arrow' />
           </Button>
-          <p>(Unable to connect to web3 directly - Refresh the page OR try installing metamask to participate)</p>
+          <p>(Unable to connect to the cheapETH network - Refresh the page OR try installing MetaMask to participate)</p>
         </div>
       );
     }
@@ -201,11 +214,7 @@ class HomeView extends Component {
             <p>Or browse <Link to={{ pathname: "/cheapGLoaT/new" }}>new submissions</Link></p>
 
           </Header>
-
-
           {this.state.curMsg}
-
-
         </Container>
       </Segment>
     );
@@ -213,7 +222,6 @@ class HomeView extends Component {
 
     return (
       <div>
-
         {userLayout}
       </div>
     );

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import '../App.css';
-// import { createMedia } from '@artsy/fresnel';
-// import PropTypes from 'prop-types';
 import {
   Button,
   Container,
@@ -59,7 +56,7 @@ class NewView extends Component {
       accAvailable = false;
     }
 
-    if (accAvailable == true) {
+    if (accAvailable === true) {
       // user has web3 available
       // fetch list of current submissions
       const rnum = await cheapGloat.methods.currentRoundNum().call();
@@ -120,7 +117,7 @@ class NewView extends Component {
       });
 
     } catch (error) {
-      console.log("Error, unable to update submission vote count");
+      console.log("Error, unable to update submission vote count. Err:", error);
       this.setState({
         loading: false,
       });
@@ -131,10 +128,10 @@ class NewView extends Component {
 
 
   handleClickUpvote = (data, event) => {
-    console.log("Upvote clicked");
+    // console.log("Upvote clicked");
     // console.log(data);
     const buttonClickId = event.value;
-    console.log(buttonClickId);
+    // console.log(buttonClickId);
     // now submit the users upvote to the network
     this.submitUpvoteAsync(buttonClickId);
 
@@ -153,10 +150,10 @@ class NewView extends Component {
     try {
       const result = await cheapGloat.methods.upvoteSubmissionById(sId).send({
         from: this.state.accountList[0],
-        value: web3.utils.toWei("0.5", "finney"),
+        value: web3.utils.toWei("0.5", "ether"),
         gas: "1000000"
       });
-      console.log(result);
+      // console.log(result);
 
       // Finally update this items vote count only
       await this.updateSubVotesAtId(sId);
@@ -167,7 +164,7 @@ class NewView extends Component {
       });
 
     } catch (error) {
-      console.log("Error, unable to upvote");
+      console.log("Error, unable to upvote. Err:", error);
       this.setState({
         loading: false,
       });
@@ -179,7 +176,7 @@ class NewView extends Component {
 
 
   handleClickDownvote = (data, event) => {
-    console.log("Downvote clicked");
+    // console.log("Downvote clicked");
     // console.log(data);
     const buttonClickId = event.value;
     this.submitDownvotevoteAsync(buttonClickId);
@@ -198,7 +195,7 @@ class NewView extends Component {
     try {
       const result = await cheapGloat.methods.downvoteSubmissionById(sId).send({
         from: this.state.accountList[0],
-        value: web3.utils.toWei("0.5", "finney"),
+        value: web3.utils.toWei("0.5", "ether"),
         gas: "1000000"
       });
       // console.log(result);
@@ -211,7 +208,7 @@ class NewView extends Component {
       });
 
     } catch (error) {
-      console.log("Error, unable to downvote");
+      console.log("Error, unable to downvote. Err:", error);
       this.setState({
         loading: false,
       });

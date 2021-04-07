@@ -62,16 +62,21 @@ class AboutView extends Component {
           </Container>
 
         </Segment>
-        <Segment textAlign='justified'>
+        <Segment textAlign='left'>
           <Container text>
             <b>cheapGLoaT</b>
             <Divider />
-            "Greatest Links of all Time" is a decentralized link aggregation system built on the cheapEthereum network
+            <p>
+              "Greatest Links of all Time" is a decentralized link aggregation system built on the cheapETH network.
+            </p>
+            <p>
+              The idea is to provide users with a periodically updating, self moderating platform - to aggregate and reward great links.
+            </p>
           </Container>
 
 
         </Segment>
-        <Segment textAlign='justified'>
+        <Segment textAlign='left'>
           <Container text>
             <b>How it works</b>
             <Divider />
@@ -110,7 +115,7 @@ class AboutView extends Component {
                     label={upVoteLabelObj}
                     labelPosition='right'
                   />
-                  1 <b>up-vote </b>costs a minimum of 0.5 ceth
+                  1 <b>up-vote </b>costs a minimum of 0.5 cTH
 
                 </Message>
 
@@ -126,18 +131,22 @@ class AboutView extends Component {
                     label={downVoteLabelObj}
                     labelPosition='left'
                   />
-                  1 <b>down-vote </b>costs a minimum of 0.5 ceth
+                  1 <b>down-vote </b>costs a minimum of 0.5 cTH
                 </Message>
 
               </List.Item>
               <List.Item as="li">
                 Each round a<b> prize pool </b>is formed so that the winnings can be distributed appropriately
                 <Message size='mini'>
-                  The<b> prize pool </b>is the value of the of the total number of up-votes, across all submissions, for that round (down-votes are not included)
+                  The<b> prize pool </b>is the value of the of the total number of up-votes, across all submissions, for that round
                   <br />
                   <br />
-                  For example, if there were 3 submissions in the current round; Submission A with 3 up-votes, Submission B with 2 up-votes and Submission C with 1 up-vote and 5 down-votes.
-                  Then, that rounds <b>prize pool</b> will be = (0.5 ceth * (3+2+1)) = 3 ceth
+                  Down-votes do not contribute to the value of the<b> prize pool </b>
+                  <br />
+                  <br />
+                  For example, if there were 3 submissions in the current round; <i>Submission A</i> with 3 up-votes, <i>Submission B</i> with 2 up-votes
+                  and <i>Submission C</i> with 1 up-vote and 5 down-votes.
+                  Then, that rounds <b>prize pool</b> will be = (0.5 cTH * (3+2+1)) = 3 cTH
                   <br />
                   <br />
                   The<b> prize pool </b>for a round is distributed as follows; 70% goes to the winner, 20% to the lucky caller, 10% to the manager
@@ -159,6 +168,10 @@ class AboutView extends Component {
                 At the end of each round one lucky general user will be allowed to call the <b>checkIfNextRoundAndPickWinner</b> function
                 <Message size='mini'>
                   <b>checkIfNextRoundAndPickWinner </b>is a function defined in the cheapGLoaT contract
+                  <br />
+                  <br />
+                    The <Button size="mini" basic color='orange' icon labelPosition='right'>Next Round<Icon name='recycle' /></Button>
+                    button will become visible on the "Home" tab once the <b>checkIfNextRoundAndPickWinner </b> function is ready to be called
                   <br />
                   <br />
                   The user who chooses to execute the<b> checkIfNextRoundAndPickWinner </b>function will be the one who is responsible for
@@ -189,13 +202,21 @@ class AboutView extends Component {
 
         </Segment>
 
-        <Segment textAlign='justified'>
+        <Segment textAlign='left'>
           <Container text>
             <b>Useful Links</b>
             <Divider />
             <List as="ul">
               <List.Item as="li">
-                <Item.Header href="https://cheapeth.org/" target='_blank'>cheapEthereum
+                <Item.Header href="https://cheapeth.org/" target='_blank'>cheapETH project
+                </Item.Header>
+              </List.Item>
+              <List.Item as="li">
+                <Item.Header href="https://metamask.io/download.html" target='_blank'>how to setup MetaMask
+                </Item.Header>
+              </List.Item>
+              <List.Item as="li">
+                <Item.Header href="https://cheapeth.org/metamask.html" target='_blank'>how to setup cheapETH on MetaMask
                 </Item.Header>
               </List.Item>
               <List.Item as="li">
@@ -203,7 +224,7 @@ class AboutView extends Component {
                 </Item.Header>
               </List.Item>
               <List.Item as="li">
-                <Item.Header href="https://github.com/Jadon-Jesse/cheapGLoaT" target='_blank'>cheapGLoaT react front-end source code
+                <Item.Header href="https://github.com/Jadon-Jesse/cheapGLoaT" target='_blank'>cheapGLoaT front-end source code
                 </Item.Header>
               </List.Item>
             </List>
@@ -212,16 +233,16 @@ class AboutView extends Component {
 
         </Segment>
 
-        <Segment textAlign='justified'>
+        <Segment textAlign='left'>
           <Container text>
             <b>Support</b>
             <Divider />
             <List as="ul">
-              <List.Item icon>
-                <Icon name="ethereum" /> 0x6D126F7882EfE24587039bADE81843178e8DdC86
+              <List.Item>
+                <List.Icon name="ethereum" /> 0x6D126F7882EfE24587039bADE81843178e8DdC86
               </List.Item>
-              <List.Item icon>
-                <Icon name="btc" /> 3CYmGwB9oBnN7xMS9LpJv45DMibWjrz6bN
+              <List.Item>
+                <List.Icon name="btc" /> 3CYmGwB9oBnN7xMS9LpJv45DMibWjrz6bN
               </List.Item>
             </List>
           </Container>
