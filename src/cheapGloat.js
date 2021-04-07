@@ -4,9 +4,9 @@ import web3 from './web3';
 let ethContract;
 
 if (web3 !== null) {
-    console.log(web3.version);
-    console.log("Got3");
-    const address = '0xa7663867ce5642C33A4840f2803c9Fb6eE3CB94C';
+    // console.log(web3.version);
+    // console.log("Got3");
+    const address = '0xd53AA6B7D5C1227744C0Dd71C1D1BBC575679666';
     const contractObj = [
         {
             "inputs": [],
@@ -367,7 +367,7 @@ if (web3 !== null) {
     ethContract = new web3.eth.Contract(contractObj, address);
 }
 else {
-    console.log("No 3");
+    // console.log("No 3");
     ethContract = null
 }
 
