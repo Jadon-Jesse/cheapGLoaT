@@ -82,9 +82,12 @@ class AboutView extends Component {
             <Divider />
             <List as="ul">
               <List.Item as="li">
-                Each <b>round</b> there are 69 submission spots available
+                Each <b>round</b> there are 69 <b>submission</b> spots available
                 <Message size='mini'>
                   A<b> round  </b> lasts approximately <b>24 hours</b> and is essentially the heartbeat of the cheapGLoaT system
+                  <br />
+                  <br />
+                  <b>Submissions</b> are free. You only pay for the gas
                 </Message>
               </List.Item>
               <List.Item as="li">
@@ -239,11 +242,17 @@ class AboutView extends Component {
             <Divider />
             <List as="ul">
               <List.Item>
+                <List.Icon name="arrow down" /> By down-voting shitposts
+              </List.Item>
+              OR
+              <br />
+              <List.Item>
                 <List.Icon name="ethereum" /> 0x6D126F7882EfE24587039bADE81843178e8DdC86
               </List.Item>
               <List.Item>
                 <List.Icon name="btc" /> 3CYmGwB9oBnN7xMS9LpJv45DMibWjrz6bN
               </List.Item>
+
             </List>
           </Container>
 
