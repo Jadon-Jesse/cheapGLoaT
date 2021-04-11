@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cheapGLoaT/static/css/main.a287b8bd.chunk.css",
-    "main.js": "/cheapGLoaT/static/js/main.8720cc91.chunk.js",
-    "main.js.map": "/cheapGLoaT/static/js/main.8720cc91.chunk.js.map",
+    "main.js": "/cheapGLoaT/static/js/main.c5e87039.chunk.js",
+    "main.js.map": "/cheapGLoaT/static/js/main.c5e87039.chunk.js.map",
     "runtime-main.js": "/cheapGLoaT/static/js/runtime-main.87de3940.js",
     "runtime-main.js.map": "/cheapGLoaT/static/js/runtime-main.87de3940.js.map",
     "static/css/2.2c45a6f5.chunk.css": "/cheapGLoaT/static/css/2.2c45a6f5.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.2c45a6f5.chunk.css",
     "static/js/2.b2c16ac2.chunk.js",
     "static/css/main.a287b8bd.chunk.css",
-    "static/js/main.8720cc91.chunk.js"
+    "static/js/main.c5e87039.chunk.js"
   ]
 }
