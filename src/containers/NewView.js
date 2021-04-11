@@ -82,8 +82,8 @@ class NewView extends Component {
         // only fetch submissions currently in session
         if (i < subLen) {
           const subI = await cheapGloat.methods.submissions(i).call();
-          console.log(subI);
-          console.log(typeof subI);
+          // console.log(subI);
+          // console.log(typeof subI);
 
           subs.push(subI);
           loadingUs.push(false);
