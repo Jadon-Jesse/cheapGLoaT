@@ -62,6 +62,9 @@ class NewView extends Component {
       // user has web3 available
       // fetch list of current submissions
       const rnum = await cheapGloat.methods.currentRoundNum().call();
+      // get current round sub count
+      const subLen = await cheapGloat.methods.subCount().call();
+
       // console.log(rnum);
 
       this.setState({
@@ -76,10 +79,33 @@ class NewView extends Component {
       var loadingDs = [];
 
       for (var i = 0; i < 69; i++) {
-        const subI = await cheapGloat.methods.submissions(i).call();
-        subs.push(subI);
-        loadingUs.push(false);
-        loadingDs.push(false);
+        // only fetch submissions currently in session
+        if (i < subLen) {
+          const subI = await cheapGloat.methods.submissions(i).call();
+          console.log(subI);
+          console.log(typeof subI);
+
+          subs.push(subI);
+          loadingUs.push(false);
+          loadingDs.push(false);
+
+        }
+        else {
+          // push dummy data
+
+          const dummySub = {
+            downvoteCount: "0",
+            subAddr: ZERO_ADDR,
+            subCaption: "",
+            subUrl: "",
+            upvoteCount: "0",
+          };
+          subs.push(dummySub);
+          loadingUs.push(false);
+          loadingDs.push(false);
+
+        }
+
 
       }
 
@@ -164,7 +190,7 @@ class NewView extends Component {
     try {
       const result = await cheapGloat.methods.upvoteSubmissionById(sId).send({
         from: this.state.accountList[0],
-        value: web3.utils.toWei("0.5", "ether"),
+        value: web3.utils.toWei("0.005", "ether"),
         gas: "1000000"
       });
       // console.log(result);
@@ -220,7 +246,7 @@ class NewView extends Component {
     try {
       const result = await cheapGloat.methods.downvoteSubmissionById(sId).send({
         from: this.state.accountList[0],
-        value: web3.utils.toWei("0.5", "ether"),
+        value: web3.utils.toWei("0.005", "ether"),
         gas: "1000000"
       });
       // console.log(result);

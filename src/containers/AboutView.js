@@ -118,7 +118,7 @@ class AboutView extends Component {
                     label={upVoteLabelObj}
                     labelPosition='right'
                   />
-                  1 <b>up-vote </b>costs a minimum of 0.5 cTH
+                  1 <b>up-vote </b>costs a minimum of 0.005 cTH
 
                 </Message>
 
@@ -134,7 +134,7 @@ class AboutView extends Component {
                     label={downVoteLabelObj}
                     labelPosition='left'
                   />
-                  1 <b>down-vote </b>costs a minimum of 0.5 cTH
+                  1 <b>down-vote </b>costs a minimum of 0.005 cTH
                 </Message>
 
               </List.Item>
@@ -149,7 +149,7 @@ class AboutView extends Component {
                   <br />
                   For example, if there were 3 submissions in the current round; <i>Submission A</i> with 3 up-votes, <i>Submission B</i> with 2 up-votes
                   and <i>Submission C</i> with 1 up-vote and 5 down-votes.
-                  Then, that rounds <b>prize pool</b> will be = (0.5 cTH * (3+2+1)) = 3 cTH
+                  Then, that rounds <b>prize pool</b> will be = (0.005 cTH * (3+2+1)) = 0.03 cTH
                   <br />
                   <br />
                   The<b> prize pool </b>for a round is distributed as follows; 70% goes to the winner, 20% to the lucky caller, 10% to the manager
@@ -231,6 +231,23 @@ class AboutView extends Component {
                 </Item.Header>
               </List.Item>
             </List>
+          </Container>
+
+
+        </Segment>
+
+        <Segment textAlign='left'>
+          <Container text>
+            <b>Update</b>
+            <Divider />
+            <Message size='mini'>
+              The <b>cheapGLoaT</b> contract has been re-deployed so that the cost per up-vote/down-vote is 0.005 cTH
+              <br />
+              <br />
+              Apologies to all previous round winners! Feel free to see if your submission still holds up ;)
+              <br />
+              <br />
+            </Message>
           </Container>
 
 
